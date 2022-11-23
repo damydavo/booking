@@ -16,7 +16,7 @@ app.get('/', (req, res) => {
     res.send('Welcome to my first route')
 })
 
-// app.use('/api/users/', require('./routes/userRoutes'))
+app.use('/api/users', require('./routes/userRoutes'))
 app.use('/api/hotels', require('./routes/hotelRoutes'))
 
 
