@@ -53,10 +53,13 @@ const createHotels = asyncHandler(async(req, res) => {
         cheapestPrice
       })
     
-       res.status(200).json(hotel)
+    if (req.user.isAdmin) {
+        res.status(200).json(hotel)
 
+    }
+    res.status(400)
+    throw new Error("Not Authorized")
 })
-
 
 //@desc Update Hotels
 //@route PUT/api/hotels/:id
@@ -65,7 +68,11 @@ const createHotels = asyncHandler(async(req, res) => {
 const updateHotel = asyncHandler(async(req, res) => {
       const hotelUpdate = await Hotel.findByIdAndUpdate(req.params.id, req.body, {new: true})
 
-      res.status(200).json(hotelUpdate)
+    if (req.user.isAdmin) {
+        res.status(200).json(hotelUpdate)
+    }
+    res.status(400)
+    throw new Error("Not Authorized")
 })
 
 //@desc Delete Hotel
@@ -75,8 +82,13 @@ const updateHotel = asyncHandler(async(req, res) => {
 const deleteHotel = asyncHandler(async (req, res) => {
     const hotel = await Hotel.findById(req.params.id)
 
-    await hotel.remove()
-    res.status(400).json({ success: true })
+    if (req.user.isAdmin) {
+        await hotel.remove()
+        res.status(400).json({ success: true })
+    }
+    res.status(400)
+    throw new Error("Not Authorized")
+
 })
 
 module.exports = {

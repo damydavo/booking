@@ -18,6 +18,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/users', require('./routes/userRoutes'))
 app.use('/api/hotels', require('./routes/hotelRoutes'))
+app.use('/api/rooms', require('./routes/roomRoutes'))
 
 
 app.use(errorHandler);
